@@ -1,6 +1,5 @@
 <?php
 
-    session_start();
     require_once 'pdoconnect.php';
     
 ?>
@@ -27,10 +26,24 @@
                                 <label>Вход/Регистрация</label>
                             </div>
                             <form method="POST" action="signcheck.php">
-                                <input type="text" class="form-controll" name="login" placeholder="login...">
-                                <input type="password" class="form-controll" name="password" placeholder="Password...">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="login" name="login">
+                                    <label for="floatingInput">login...</label>
+                                </div>
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password..." name="password">
+                                    <label for="floatingPassword">Password...</label>
+                                </div>
                                 <button type="submit" class="btnn btn-outline-dark" name="auth">Вход/Регистрация</button>
                             </form>
+                            <?php
+
+                                if($_SESSION['message']) {
+                                    echo '<p class="msg">' . $_SESSION['message'] . '</p>';
+                                }
+                                unset($_SESSION['message']);
+
+                            ?>
                         </div>
                     </div>
                 </div>

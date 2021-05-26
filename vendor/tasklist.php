@@ -1,6 +1,5 @@
 <?php
 
-    session_start();
     require_once 'pdoconnect.php';
 
 ?>
@@ -24,8 +23,11 @@
                     <div class="content-block">
                         <div class="content">
                             <div>
+                            <p>
+                                    <?php print_r($user_id);?>
+                                </p>
                                 <form method="POST" action="logout.php">
-                                    <button class="btn btn-outline-dark" type="submit">Выход</button>
+                                    <button class="btn btn-outline-dark" type="submit" name="logout">Выход</button>
                                 </form>
                             </div>
                             <div class="title">
@@ -33,62 +35,25 @@
                             </div>
                             <div class="add-task">
                                 <div class="row">
-                                    <div class="col-lg-8 col-md-8">
-                                        <form id="form1">
-                                            <input type="text" placeholder="Enter text..." class="form-control">
+                                    <div class="col-lg-12 col-md-12">
+                                        <form id="form1" method="POST" action="nametask.php">
+                                            <div class="roow">
+                                                <input type="text" placeholder="Enter text..." class="form-controlo" name="nametask">
+                                                <button type="submit" name="addtask" class="btn btn-darkk">Add Task</button>
+                                            </div>
                                             <div class="btn-form1">
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>REMOVE ALL</b></button>
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>READY ALL</b></button>
+                                                <button type="submit" name="removeall" class="btn btn-outline-dark"><b>REMOVE ALL</b></button>
+                                                <button type="submit" name="readyall" class="btn btn-outline-dark"><b>READY ALL</b></button>
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        <form>
-                                            <button type="submit" name="" class="btn btn-dark">Add Task</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tasks">
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-8">
-                                        <div>
-                                            <label>Task description</label>
-                                        </div>
-                                        <form id="form2">
-                                            <div class="btn-form2">
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>READY</b></button>
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>DELETE</b></button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        <div class="circle">
+                            <?php
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tasks1">
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-8">
-                                        <div>
-                                            <label>Task description</label>
-                                        </div>
-                                        <form id="form2">
-                                            <div class="btn-form2">
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>UNREADY</b></button>
-                                                <button type="submit" name="" class="btn btn-outline-dark"><b>DELETE</b></button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-4 col-md-4">
-                                        <div class="circle1">
+                                
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            ?>
                         </div>
                     </div>
                 </div>
