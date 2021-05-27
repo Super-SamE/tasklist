@@ -24,7 +24,9 @@
                         <div class="content">
                             <div>
                             <p>
-                                    <?php print_r($user_id);?>
+                                    <?= $_SESSION['user']['id']?>
+                                    <?= $_SESSION['user']['login']?>
+                                    <?= $_SESSION['user']['password']?>
                                 </p>
                                 <form method="POST" action="logout.php">
                                     <button class="btn btn-outline-dark" type="submit" name="logout">Выход</button>

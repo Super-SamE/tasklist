@@ -11,7 +11,11 @@
             $real_user = $auth_user->rowCount();
             $numrows = $auth_user->fetch();
             if ($real_user==1) {
-                $_SESSION['id'] = $user_id;
+                $_SESSION['user'] = [
+                    "id" => $numrows['id'],
+                    "login" => $numrows['login'],
+                    "password" => $numrows['password']
+                ];
                 header('Location: tasklist.php');
             } else {
                 if(!empty($_POST['login']) && !empty($_POST['password'])) {
