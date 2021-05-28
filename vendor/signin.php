@@ -1,6 +1,9 @@
 <?php
 
     require_once 'pdoconnect.php';
+    if(isset($_SESSION['user'])){
+        header('Location: tasklist.php');
+    }
     
 ?>
 <!DOCTYPE html>
