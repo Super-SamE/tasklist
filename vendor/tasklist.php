@@ -53,26 +53,28 @@
 
                                 $addtask = $_POST['addtask'];
                                 $nametask = $_POST['nametask'];
+                                $readyall = $_POST['readyall'];
+                                $removeall = $_POST['removeall'];
 
                                 if(isset($addtask)) {
                                 $nametask = htmlspecialchars($_POST['nametask']);
-                                $new_addtask = "INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES (:userid, '$nametask', '1', '0')";
+                                $new_addtask = "INSERT INTO `tasks`(`user_id`, `description`, `created_at`, `status`) VALUES (:userid, :nametask, '1', '0')";
                                 $newtask = $pdo->prepare($new_addtask);
-                                $newtask->execute(['userid' => $_SESSION['user']['id']]);
+                                $newtask->execute(['userid' => $_SESSION['user']['id'], 'nametask' => $nametask]);
                                 }
 
                                 $readyidtask = $_GET['readyidtask'];
                                 $delidtask = $_GET['delidtask'];
-                                $readyall = $_GET['readyall'];
-                                $removeall = $_GET['removeall'];
+                                $ready = $_GET['ready'];
+                                $remove = $_GET['remove'];
 
-                                $task_removeall = "UPDATE `tasks` SET `status` = '0' WHERE `tasks`.`id` = :removeall";
+                                $task_removeall = "UPDATE `tasks` SET `status` = '0' WHERE `tasks`. `id` = :remove";
                                 $task_remove = $pdo->prepare($task_removeall);
-                                $task_remove->execute(['removeall' => $removeall]);
+                                $task_remove->execute(['remove' => $remove]);
 
-                                $task_readyall = "UPDATE `tasks` SET `status` = '1' WHERE `tasks`.`id` = :readyall";
+                                $task_readyall = "UPDATE `tasks` SET `status` = '1' WHERE `tasks`. `id` = :ready";
                                 $task_ready = $pdo->prepare($task_readyall);
-                                $task_ready->execute(['readyall' => $readyall]);
+                                $task_ready->execute(['ready' => $ready]);
 
                                 $task_del = "DELETE FROM `tasks` WHERE `tasks`.`id` = :delidtask";
                                 $delete = $pdo->prepare($task_del);
@@ -84,12 +86,12 @@
                                 $usertaskout = $usertask->fetch();
 
                                 if(isset($readyall)) {
-                                    $readyupdate = "UPDATE `tasks` SET `status` = '1' WHERE `tasks`. `status` = '0'";
-                                    $update = $pdo->query($readyupdate);
-                                    var_dump($readyall);
+                                    $readyupdate = "UPDATE `tasks` SET `status` = '1' WHERE `user_id` = :userid";
+                                    $update = $pdo->prepare($readyupdate);
+                                    $update->execute(['userid' => $_SESSION['user']['id']]);
                                 }
 
-                                if($removeall) {
+                                if(isset($removeall)) {
                                     $removetask = "DELETE FROM `tasks` WHERE `tasks`.`user_id` = :userid";
                                     $remove = $pdo->prepare($removetask);
                                     $remove->execute(['userid' => $_SESSION['user']['id']]);
@@ -104,12 +106,10 @@
                                                         <div>
                                                             <label>$usertaskout[description]</label>
                                                         </div>
-                                                        <form id='form2'>
-                                                            <div class='btn-form2'>
-                                                                <a href=?readyall=$usertaskout[id]><button type='submit' name='READY' id='$usertaskout[id]' class='btn btn-outline-dark'><b>READY</b></button></a>
-                                                                <a href=?delidtask=$usertaskout[id]><button type='submit' name='DELETE' class='btn btn-outline-dark'><b>DELETE</b></button></a>
-                                                            </div>
-                                                        </form>
+                                                        <div class='btn-form2'>
+                                                            <a href=?ready=$usertaskout[id]><button type='submit' name='ready' class='btn btn-outline-dark'><b>READY</b></button></a>
+                                                            <a href=?delidtask=$usertaskout[id]><button type='submit' name='deleteidtask' class='btn btn-outline-dark'><b>DELETE</b></button></a>
+                                                        </div>
                                                     </div>
                                                     <div class='col-lg-4 col-md-4'>
                                                         <div class='circle'>
@@ -126,13 +126,11 @@
                                                     <div class='col-lg-8 col-md-8'>
                                                         <div>
                                                             <label>$usertaskout[description]</label>
-                                                        </div>
-                                                        <form id='form2'>
-                                                            <div class='btn-form2'>
-                                                                <a href=?removeall=$usertaskout[id]><button type='submit' name='' class='btn btn-outline-dark'><b>UNREADY</b></button></a>
-                                                                <a href=?delidtask=$usertaskout[id]><button type='submit' name='' class='btn btn-outline-dark'><b>DELETE</b></button></a>
-                                                            </div>
-                                                        </form>
+                                                        </div>                                                        
+                                                        <div class='btn-form2'>
+                                                            <a href=?remove=$usertaskout[id]><button type='submit' name='remove' class='btn btn-outline-dark'><b>UNREADY</b></button></a>
+                                                            <a href=?delidtask=$usertaskout[id]><button type='submit' name='deleteidtask' class='btn btn-outline-dark'><b>DELETE</b></button></a>
+                                                        </div>                                                        
                                                     </div>
                                                     <div class='col-lg-4 col-md-4'>
                                                         <div class='circle1'>
